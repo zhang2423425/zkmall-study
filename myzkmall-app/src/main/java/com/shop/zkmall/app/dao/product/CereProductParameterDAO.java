@@ -1,0 +1,24 @@
+/*
+ * Copyright (C) 2017-2025
+ * ZKMall All rights reserved, Designed By 深圳中科鑫智科技有限公司
+ * Copyright authorization contact 18814114118
+ */
+package com.shop.zkmall.app.dao.product;
+
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.shop.zkmall.commons.domain.product.CereProductParameter;
+import org.apache.ibatis.annotations.Mapper;
+import org.springframework.cache.annotation.Cacheable;
+
+import java.util.List;
+
+/**
+ * @author zkmall zkmallvip@163.com
+ */
+@Mapper
+public interface CereProductParameterDAO extends BaseMapper<CereProductParameter> {
+
+    @Cacheable(value = "config", cacheManager = "caffeineCacheManager")
+    List<CereProductParameter> selectByProductId(Long productId);
+
+}

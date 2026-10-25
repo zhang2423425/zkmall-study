@@ -1,0 +1,117 @@
+/*
+ * Copyright (C) 2017-2025
+ * ZKMall All rights reserved, Designed By 深圳中科鑫智科技有限公司
+ * Copyright authorization contact 18814114118
+ */
+package com.shop.zkmall.admin.page.product;
+
+import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
+
+import java.math.BigDecimal;
+
+/**
+ * 画布会员商品数据
+ *
+ * @author zkmall zkmallvip@163.com
+ */
+@Data
+@ApiModel(value = "MemberProduct", description = "画布会员商品数据")
+public class MemberProduct {
+
+    /**
+     * 店铺id
+     */
+    @Schema(description = "店铺id")
+    private Long shopId;
+
+    /**
+     * 店铺名称
+     */
+    @Schema(description = "店铺名称")
+    private String shopName;
+
+    /**
+     * 店铺LOGO
+     */
+    @Schema(description = "店铺LOGO")
+    private String shopLogo;
+
+    /**
+     * 产品ID
+     */
+    @Schema(description = "产品ID")
+    private Long productId;
+
+    /**
+     * 优惠方式   1-折扣 2-指定价格
+     */
+    private Integer mode;
+
+    /**
+     * 会员等级id
+     */
+    @Schema(description = "会员等级id")
+    private Long memberLevelId;
+
+    /**
+     * 会员等级名称
+     */
+    @Schema(description = "会员等级名称")
+    private String memberLevelName;
+
+    /**
+     * 规格id
+     */
+    @Schema(description = "规格id")
+    private Long skuId;
+
+    /**
+     * 产品名称
+     */
+    @Schema(description = "产品名称")
+    private String productName;
+
+    /**
+     * 产品主图
+     */
+    @Schema(description = "产品主图")
+    private String image;
+
+    /**
+     * 商品原价
+     */
+    @Schema(description = "商品原价")
+    private BigDecimal originalPrice;
+
+    /**
+     * 商品会员价元/折扣
+     */
+    @Schema(description = "商品会员价元/折扣")
+    private BigDecimal discount;
+
+    /**
+     * 售价
+     */
+    @Schema(description = "售价")
+    private BigDecimal price;
+
+    /**
+     * 库存
+     */
+    @Schema(description = "库存")
+    private Integer stockNumber;
+
+    /**
+     * 销量
+     */
+    @Schema(description = "销量")
+    private Integer number;
+
+    /**
+     * 付款人数
+     */
+    @Schema(description = "付款人数")
+    private Integer users;
+}

@@ -1,0 +1,81 @@
+/*
+ * Copyright (C) 2017-2025
+ * ZKMall All rights reserved, Designed By 深圳中科鑫智科技有限公司
+ * Copyright authorization contact 18814114118
+ */
+package com.shop.zkmall.business.param.user;
+
+import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotBlank;
+import lombok.Data;
+
+import java.io.Serializable;
+import java.util.List;
+
+/**
+ * 添加商家用户请求
+ *
+ * @author zkmall zkmallvip@163.com
+ */
+@Data
+@ApiModel(value = "BusinessSaveUser", description = "添加商家用户请求")
+public class BusinessSaveUser implements Serializable {
+
+    /**
+     * 店铺id
+     */
+    @Schema(description = "店铺id")
+    private Long shopId;
+
+    /**
+     * 账号
+     */
+    @Schema(description = "账号")
+    @NotBlank(message = "账号不能为空")
+    private String username;
+
+    /**
+     * 登录密码
+     */
+    @Schema(description = "登录密码")
+    private String password;
+
+    /**
+     * 昵称
+     */
+    @Schema(description = "昵称")
+    @NotBlank(message = "昵称不能为空")
+    private String name;
+
+    /**
+     * 性别
+     */
+    @Schema(description = "性别")
+    private String sex;
+
+    /**
+     * 邮箱
+     */
+    @Schema(description = "邮箱")
+    private String email;
+
+    /**
+     * 手机号
+     */
+    @Schema(description = "手机号")
+    private String phone;
+
+    /**
+     * 是否启用 1-是 0-否
+     */
+    @Schema(description = "是否启用 1-是 0-否")
+    private Integer state;
+
+    /**
+     * 角色id数组
+     */
+    @Schema(description = "角色id数组")
+    private List<Long> roleIds;
+
+}

@@ -1,0 +1,560 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.zkmall.admin.dao.product.CereShopProductDAO">
+    <resultMap id="BaseResultMap" type="com.shop.zkmall.commons.domain.product.CereShopProduct">
+        <id column="product_id" jdbcType="BIGINT" property="productId"/>
+        <result column="shop_id" jdbcType="BIGINT" property="shopId"/>
+        <result column="product_name" jdbcType="VARCHAR" property="productName"/>
+        <result column="product_brief" jdbcType="VARCHAR" property="productBrief"/>
+        <result column="shop_group_id" jdbcType="BIGINT" property="shopGroupId"/>
+        <result column="classify_id" jdbcType="BIGINT" property="classifyId"/>
+        <result column="supplier_id" jdbcType="BIGINT" property="supplierId"/>
+        <result column="supplier_name" jdbcType="VARCHAR" property="supplierName"/>
+        <result column="if_logistics" jdbcType="BIT" property="ifLogistics"/>
+        <result column="shelve_state" jdbcType="BIT" property="shelveState"/>
+        <result column="if_oversold" jdbcType="BIT" property="ifOversold"/>
+        <result column="fictitious_number" jdbcType="INTEGER" property="fictitiousNumber"/>
+        <result column="reject" jdbcType="VARCHAR" property="reject"/>
+        <result column="create_time" jdbcType="VARCHAR" property="createTime"/>
+        <result column="update_time" jdbcType="VARCHAR" property="updateTime"/>
+    </resultMap>
+    <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs"
+               type="com.shop.zkmall.commons.domain.product.CereShopProduct">
+        <result column="product_text" jdbcType="LONGVARCHAR" property="productText"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        product_id, shop_id, product_name, product_brief, shop_group_id, classify_id, supplier_id,
+        supplier_name, if_logistics, shelve_state, if_oversold,fictitious_number, create_time,
+        update_time,product_text,reject
+    </sql>
+    <sql id="Blob_Column_List">
+        product_text
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from cere_shop_product
+        where product_id = #{productId,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from cere_shop_product
+        where product_id = #{productId,jdbcType=BIGINT}
+    </delete>
+    <insert id="insertSelective" keyColumn="product_id" keyProperty="productId"
+            parameterType="com.shop.zkmall.commons.domain.product.CereShopProduct" useGeneratedKeys="true">
+        insert into cere_shop_product
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="shopId != null">
+                shop_id,
+            </if>
+            <if test="productName != null and productName!=''">
+                product_name,
+            </if>
+            <if test="productBrief != null and productBrief!=''">
+                product_brief,
+            </if>
+            <if test="shopGroupId != null">
+                shop_group_id,
+            </if>
+            <if test="classifyId != null">
+                classify_id,
+            </if>
+            <if test="supplierId != null">
+                supplier_id,
+            </if>
+            <if test="supplierName != null and supplierName!=''">
+                supplier_name,
+            </if>
+            <if test="ifLogistics != null">
+                if_logistics,
+            </if>
+            <if test="shelveState != null">
+                shelve_state,
+            </if>
+            <if test="ifOversold != null">
+                if_oversold,
+            </if>
+            <if test="fictitiousNumber != null">
+                fictitious_number,
+            </if>
+            <if test="reject != null">
+                reject,
+            </if>
+            <if test="createTime != null and createTime!=''">
+                create_time,
+            </if>
+            <if test="updateTime != null and updateTime!=''">
+                update_time,
+            </if>
+            <if test="productText != null">
+                product_text,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="shopId != null">
+                #{shopId,jdbcType=BIGINT},
+            </if>
+            <if test="productName != null and productName!=''">
+                #{productName,jdbcType=VARCHAR},
+            </if>
+            <if test="productBrief != null and productBrief!=''">
+                #{productBrief,jdbcType=VARCHAR},
+            </if>
+            <if test="shopGroupId != null">
+                #{shopGroupId,jdbcType=BIGINT},
+            </if>
+            <if test="classifyId != null">
+                #{classifyId,jdbcType=BIGINT},
+            </if>
+            <if test="supplierId != null">
+                #{supplierId,jdbcType=BIGINT},
+            </if>
+            <if test="supplierName != null and supplierName!=''">
+                #{supplierName,jdbcType=VARCHAR},
+            </if>
+            <if test="ifLogistics != null">
+                #{ifLogistics,jdbcType=BIT},
+            </if>
+            <if test="shelveState != null">
+                #{shelveState,jdbcType=BIT},
+            </if>
+            <if test="ifOversold != null">
+                #{ifOversold,jdbcType=BIT},
+            </if>
+            <if test="fictitiousNumber != null">
+                #{fictitiousNumber,jdbcType=INTEGER},
+            </if>
+            <if test="reject != null">
+                #{reject,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null and createTime!=''">
+                #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null and updateTime!=''">
+                #{updateTime,jdbcType=VARCHAR},
+            </if>
+            <if test="productText != null">
+                #{productText,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.shop.zkmall.commons.domain.product.CereShopProduct">
+        update cere_shop_product
+        <set>
+            <if test="shopId != null">
+                shop_id = #{shopId,jdbcType=BIGINT},
+            </if>
+            <if test="productName != null and productName!=''">
+                product_name = #{productName,jdbcType=VARCHAR},
+            </if>
+            <if test="productBrief != null and productBrief!=''">
+                product_brief = #{productBrief,jdbcType=VARCHAR},
+            </if>
+            <if test="shopGroupId != null">
+                shop_group_id = #{shopGroupId,jdbcType=BIGINT},
+            </if>
+            <if test="classifyId != null">
+                classify_id = #{classifyId,jdbcType=BIGINT},
+            </if>
+            <if test="supplierId != null">
+                supplier_id = #{supplierId,jdbcType=BIGINT},
+            </if>
+            <if test="supplierName != null and supplierName!=''">
+                supplier_name = #{supplierName,jdbcType=VARCHAR},
+            </if>
+            <if test="ifLogistics != null">
+                if_logistics = #{ifLogistics,jdbcType=BIT},
+            </if>
+            <if test="shelveState != null">
+                shelve_state = #{shelveState,jdbcType=BIT},
+            </if>
+            <if test="ifOversold != null">
+                if_oversold = #{ifOversold,jdbcType=BIT},
+            </if>
+            <if test="fictitiousNumber != null">
+                fictitious_number = #{fictitiousNumber,jdbcType=INTEGER},
+            </if>
+            <if test="reject != null">
+                reject = #{reject,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null and createTime!=''">
+                create_time = #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null and updateTime!=''">
+                update_time = #{updateTime,jdbcType=VARCHAR},
+            </if>
+            <if test="productText != null">
+                product_text = #{productText,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where product_id = #{productId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.shop.zkmall.commons.domain.product.CereShopProduct">
+        update cere_shop_product
+        set shop_id = #{shopId,jdbcType=BIGINT},
+        product_name = #{productName,jdbcType=VARCHAR},
+        product_brief = #{productBrief,jdbcType=VARCHAR},
+        shop_group_id = #{shopGroupId,jdbcType=BIGINT},
+        classify_id = #{classifyId,jdbcType=BIGINT},
+        supplier_id = #{supplierId,jdbcType=BIGINT},
+        supplier_name = #{supplierName,jdbcType=VARCHAR},
+        if_logistics = #{ifLogistics,jdbcType=BIT},
+        shelve_state = #{shelveState,jdbcType=BIT},
+        if_oversold = #{ifOversold,jdbcType=BIT},
+        fictitious_number = #{fictitiousNumber,jdbcType=INTEGER},
+        reject = #{reject,jdbcType=VARCHAR},
+        create_time = #{createTime,jdbcType=VARCHAR},
+        update_time = #{updateTime,jdbcType=VARCHAR},
+        product_text = #{productText,jdbcType=LONGVARCHAR}
+        where product_id = #{productId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.shop.zkmall.commons.domain.product.CereShopProduct">
+        update cere_shop_product
+        set shop_id = #{shopId,jdbcType=BIGINT},
+        product_name = #{productName,jdbcType=VARCHAR},
+        product_brief = #{productBrief,jdbcType=VARCHAR},
+        shop_group_id = #{shopGroupId,jdbcType=BIGINT},
+        classify_id = #{classifyId,jdbcType=BIGINT},
+        supplier_id = #{supplierId,jdbcType=BIGINT},
+        supplier_name = #{supplierName,jdbcType=VARCHAR},
+        if_logistics = #{ifLogistics,jdbcType=BIT},
+        shelve_state = #{shelveState,jdbcType=BIT},
+        if_oversold = #{ifOversold,jdbcType=BIT},
+        fictitious_number = #{fictitiousNumber,jdbcType=INTEGER},
+        reject = #{reject,jdbcType=VARCHAR},
+        create_time = #{createTime,jdbcType=VARCHAR},
+        update_time = #{updateTime,jdbcType=VARCHAR}
+        where product_id = #{productId,jdbcType=BIGINT}
+    </update>
+    <update id="unShelveByShopId">
+        update cere_shop_product
+        set shelve_state = 0, update_time = NOW()
+        where shop_id = #{shopId}
+    </update>
+
+    <update id="clearBrand">
+        update cere_shop_product
+        set brand_id = null
+        where brand_id = #{brandId}
+    </update>
+
+    <select id="getProducts" parameterType="com.shop.zkmall.admin.param.product.CanvasAdminProductParam"
+            resultType="com.shop.zkmall.admin.page.product.CanvasProduct">
+        SELECT
+        a.shop_id,
+        d.shop_name,
+        a.product_id,
+        a.product_name,
+        x.users,
+        d.shop_logo,
+        IF(
+        h.image IS NULL
+        OR h.image = '',
+        c.product_image,
+        h.image
+        ) image,
+        b.price,
+        b.sku_id,
+        b.original_price,
+        IF(f.number IS NULL, 0, f.number) number,
+        b.stock_number
+        from
+        cere_shop_product a
+        LEFT JOIN (
+        SELECT
+        a.product_id,
+        a.price,
+        a.sku_id,
+        a.original_price,
+        a.stock_number
+        from
+        cere_product_sku a,
+        cere_shop_product b
+        where
+        a.product_id = b.product_id
+        GROUP BY
+        a.product_id
+        ) b ON a.product_id = b.product_id
+        LEFT JOIN (
+        SELECT
+        a.product_id,
+        a.product_image
+        from
+        cere_product_image a,
+        cere_shop_product b
+        where
+        a.product_id = b.product_id
+        GROUP BY
+        a.product_id
+        ) c ON a.product_id = c.product_id
+        LEFT JOIN cere_platform_shop d ON a.shop_id = d.shop_id
+        LEFT JOIN cere_product_classify e ON a.classify_id = e.classify_id
+        LEFT JOIN (
+        SELECT
+        SUM(number) number,
+        sku_id,
+        order_id
+        from
+        cere_order_product
+        GROUP BY
+        sku_id
+        ) f ON b.sku_id = f.sku_id
+        LEFT JOIN cere_shop_order g ON f.order_id = g.order_id and g.state IN(2, 3, 4)
+        LEFT JOIN (
+        SELECT
+        a.sku_id,
+        a.image
+        from
+        cere_sku_name a,
+        cere_product_sku b
+        where
+        a.sku_id = b.sku_id
+        LIMIT
+        1
+        ) h ON b.sku_id = h.sku_id
+        LEFT JOIN (
+        SELECT
+        COUNT(a.buyer_user_id) users,
+        a.product_id
+        FROM
+        (
+        SELECT
+        b.buyer_user_id,
+        a.product_id
+        FROM
+        cere_order_product a,
+        cere_shop_order b
+        where
+        a.order_id = b.order_id
+        and b.state IN(2, 3, 4)
+        GROUP BY
+        a.product_id,
+        b.buyer_user_id
+        ) a
+        GROUP BY
+        a.product_id
+        ) x ON a.product_id = x.product_id
+        where
+        a.shelve_state = 1
+        and d.state = 1
+        <if test="shopId!=null">
+            and a.shop_id=#{shopId}
+        </if>
+        <if test="search!=null and search!=''">
+            and (d.shop_name like concat('%',#{search},'%') OR
+            a.product_id like concat('%',#{search},'%') OR
+            a.product_name like concat('%',#{search},'%'))
+        </if>
+        <if test="shelveState!=null">
+            and a.shelve_state=#{shelveState}
+        </if>
+        <if test="classifyId!=null">
+            <choose>
+                <when test="classifyLevel != null">
+                    <if test="classifyLevel == 1">
+                        and a.classify_id1 = #{classifyId}
+                    </if>
+                    <if test="classifyLevel == 2">
+                        and a.classify_id2 = #{classifyId}
+                    </if>
+                    <if test="classifyLevel == 3">
+                        and a.classify_id3 = #{classifyId}
+                    </if>
+                </when>
+                <otherwise>
+                    and (
+                    a.classify_id1 = #{classifyId}
+                    OR a.classify_id2 = #{classifyId}
+                    OR a.classify_id3 = #{classifyId}
+                    )
+                </otherwise>
+            </choose>
+        </if>
+        <if test="ids!=null and ids.size()>0">
+            and a.product_id IN(
+            <foreach collection="ids" item="id" index="index" separator=",">
+                #{id}
+            </foreach>
+            )
+        </if>
+    </select>
+
+    <select id="getShops" parameterType="com.shop.zkmall.admin.param.product.CanvasAdminProductParam"
+            resultType="com.shop.zkmall.admin.page.product.CanvasShop">
+        SELECT shop_id,shop_name,shop_phone phone FROM cere_platform_shop where check_state=1 and state=1
+        <if test="search!=null and search!=''">
+            and shop_name like concat('%',#{search},'%')
+        </if>
+    </select>
+
+    <select id="getAll" parameterType="com.shop.zkmall.admin.param.product.ProductGetAllParam"
+            resultType="com.shop.zkmall.admin.page.product.ShopProduct">
+        SELECT
+        a.product_id,a.product_name,a.shop_id,e.shop_name,a.shelve_state,a.fictitious_number,a.create_time,c.stock_number,
+        concat('￥', a.min_price, '~￥', a.max_price) sectionPrice,a.product_image AS image
+        FROM cere_shop_product a INNER JOIN cere_platform_shop e ON a.shop_id = e.shop_id
+        LEFT JOIN (
+        SELECT sku.product_id, SUM(sku.stock_number) AS stock_number FROM cere_product_sku sku GROUP BY sku.product_id
+        ) c ON c.product_id = a.product_id
+        <where>
+            <if test="shopName!=null and shopName!=''">
+                and e.shop_name like concat('%',#{shopName},'%')
+            </if>
+            <if test="productId!=null">
+                and a.product_id like concat('%',#{productId},'%')
+            </if>
+            <if test="productName!=null and productName!=''">
+                and a.product_name like concat('%',#{productName},'%')
+            </if>
+            <if test="startTime!=null and startTime!=''">
+                and a.create_time&gt;=#{startTime} and a.create_time&lt;=#{endTime}
+            </if>
+            <if test="shelveState!=null">
+                and a.shelve_state=#{shelveState}
+            </if>
+            <if test="classifyId != null">
+                <choose>
+                    <when test="classifyLevel != null">
+                        <if test="classifyLevel == 1">
+                            and a.classify_id1 = #{classifyId}
+                        </if>
+                        <if test="classifyLevel == 2">
+                            and a.classify_id2 = #{classifyId}
+                        </if>
+                        <if test="classifyLevel == 3">
+                            and a.classify_id3 = #{classifyId}
+                        </if>
+                    </when>
+                    <otherwise>
+                        and (
+                        a.classify_id1 = #{classifyId}
+                        OR a.classify_id2 = #{classifyId}
+                        OR a.classify_id3 = #{classifyId}
+                        )
+                    </otherwise>
+                </choose>
+            </if>
+        </where>
+        ORDER by a.update_time DESC,a.create_time DESC
+    </select>
+
+    <select id="getById" parameterType="java.lang.Object" resultType="com.shop.zkmall.admin.page.product.ProductDetail">
+        SELECT
+        a.shop_id,s.shop_name,product_name,product_brief,c.shop_group_id,a.classify_id,b.classify_name,c.group_name
+        shopGroupName,
+        supplier_id,supplier_name,if_logistics,shelve_state,if_oversold,if_huabei,product_text FROM cere_shop_product a
+        LEFT JOIN cere_product_classify b ON a.classify_id=b.classify_id
+        LEFT JOIN cere_shop_group c ON a.shop_group_id=c.shop_group_id
+        LEFT JOIN cere_platform_shop s ON s.shop_id = a.shop_id
+        where product_id=#{productId}
+    </select>
+
+    <select id="findProudctIdListByShopId" resultType="java.lang.Long">
+        select product_id from cere_shop_product
+        where shop_id = #{shopId}
+    </select>
+
+    <select id="findSkuNameListByProductId" resultType="com.shop.zkmall.commons.domain.product.CereSkuName">
+        select a.sku_id, a.need, a.sku_name, a.sku_value, a.image
+        from cere_sku_name a join cere_product_sku b on a.sku_id = b.sku_id
+        where b.product_id = #{productId}
+    </select>
+
+    <select id="getRecommendActivityRealInfo" resultType="com.shop.zkmall.admin.page.product.CanvasProduct">
+        SELECT
+        d.shop_id,
+        d.shop_name,
+        d.shop_logo,
+        a.product_id,
+        b.product_name,
+        a.activity_type,
+        if(a.activity_type = 1, a.activity_id, 0) as shopGroupWorkId,
+        if(a.activity_type = 2, a.activity_id, 0) as shopSeckillId,
+        if(a.activity_type = 3, a.activity_id, 0) as shopDiscountId,
+        a.sales_user_count + fictitious_number as users,
+        c.product_image as image,
+        a.start_time,
+        a.end_time,
+        a.state,
+        a.if_enable - 1 as ifEnable,
+        a.enable_time,
+        a.cur_price as price,
+        a.cur_original_price original_price,
+        a.sku_id,
+        n.stock_number,
+        <if test="type != null and type IN(1,2,3)">
+            a.sales_volume as number
+        </if>
+        <if test="type == null">
+            a.product_sales_volume as number
+        </if>
+        FROM cere_sku_member_real_info a
+        JOIN cere_shop_product b on b.product_id = a.product_id
+        JOIN cere_product_image c on c.product_id = a.product_id
+        JOIN cere_platform_shop d ON b.shop_id = d.shop_id
+        JOIN cere_product_sku n ON a.sku_id = n.sku_id
+        JOIN cere_recommend_product crp on crp.product_id = a.product_id
+        <if test="recommendType == 1 or recommendType == 2 or recommendType == 3">
+            and crp.recommend_type = #{recommendType}
+        </if>
+
+        <if test="classifyId != null">
+            JOIN cere_product_classify e ON b.classify_id = e.classify_id
+        </if>
+
+        where a.member_level_id = 0 and b.shelve_state = 1 and d.state = 1
+        <if test="type != null">
+            <if test="type == 1">
+                and a.activity_type = 1
+            </if>
+            <if test="type == 2">
+                and a.activity_type = 2
+            </if>
+            <if test="type == 3">
+                and a.activity_type = 3
+            </if>
+        </if>
+        <if test="shopId != null">
+            and b.shop_id = #{shopId}
+        </if>
+        <if test="search != null and search != ''">
+            and (d.shop_name like concat('%', #{search}, '%')
+            OR a.product_id like concat('%', #{search}, '%')
+            OR b.product_name like concat('%', #{search}, '%'))
+        </if>
+        <if test="classifyId != null">
+            <choose>
+                <when test="classifyLevel != null">
+                    <if test="classifyLevel == 1">
+                        and b.classify_id1 = #{classifyId}
+                    </if>
+                    <if test="classifyLevel == 2">
+                        and b.classify_id2 = #{classifyId}
+                    </if>
+                    <if test="classifyLevel == 3">
+                        and b.classify_id3 = #{classifyId}
+                    </if>
+                </when>
+                <otherwise>
+                    and (
+                    b.classify_id1 = #{classifyId}
+                    OR b.classify_id2 = #{classifyId}
+                    OR b.classify_id3 = #{classifyId}
+                    )
+                </otherwise>
+            </choose>
+        </if>
+        <if test="ids != null and ids.size() > 0">
+            and a.product_id IN(
+            <foreach collection="ids" item="id" separator=",">
+                #{id}
+            </foreach>
+            )
+        </if>
+        GROUP BY a.product_id
+        ORDER BY a.update_time DESC, b.update_time DESC
+    </select>
+
+</mapper>

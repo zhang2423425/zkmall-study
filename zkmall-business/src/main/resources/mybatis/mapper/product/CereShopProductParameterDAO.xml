@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.zkmall.business.dao.product.CereProductParameterDAO">
+    <insert id="insertBatch">
+        insert into cere_product_parameter
+        (
+        product_id, parameter_key, parameter_value, create_time
+        )
+        values
+        <foreach collection="list" item="data" separator=",">
+            (
+            #{data.productId}, #{data.parameterKey}, #{data.parameterValue}, #{data.createTime}
+            )
+        </foreach>
+    </insert>
+    <delete id="deleteByProductId">
+        delete
+        from cere_product_parameter
+        where product_id = #{productId}
+    </delete>
+</mapper>

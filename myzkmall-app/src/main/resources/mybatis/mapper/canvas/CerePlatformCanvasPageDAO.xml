@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.zkmall.app.dao.canvas.CerePlatformCanvasPageDAO">
+    <resultMap id="BaseResultMap" type="com.shop.zkmall.commons.domain.canvas.CerePlatformCanvasPage">
+        <id column="canvas_id" jdbcType="BIGINT" property="canvasId"/>
+        <result column="terminal" jdbcType="BIT" property="terminal"/>
+        <result column="json" jdbcType="VARCHAR" property="json"/>
+        <result column="type" jdbcType="BIT" property="type"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="home_page_flag" jdbcType="BIT" property="homePageFlag"/>
+        <result column="default_page" jdbcType="BIT" property="defaultPage"/>
+        <result column="create_time" jdbcType="VARCHAR" property="createTime"/>
+        <result column="update_time" jdbcType="VARCHAR" property="updateTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        canvas_id, terminal, json, type, name, home_page_flag, default_page, create_time, update_time
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from cere_platform_canvas_page
+        where canvas_id = #{canvasId,jdbcType=BIGINT}
+    </select>
+    <select id="getCanvas" parameterType="com.shop.zkmall.commons.domain.canvas.CerePlatformCanvasPage"
+            resultType="com.shop.zkmall.commons.domain.canvas.CerePlatformCanvasPage">
+        SELECT * FROM cere_platform_canvas_page
+        <where>
+            <choose>
+                <when test="canvasId != null and canvasId > 0">
+                    canvas_id = #{canvasId}
+                </when>
+                <otherwise>
+                    page_type = 2
+                    <if test="terminal != null">
+                        and terminal = #{terminal,jdbcType=BIT}
+                    </if>
+                    <if test="json != null">
+                        and json = #{json,jdbcType=VARCHAR}
+                    </if>
+                    <if test="type != null">
+                        and type = #{type,jdbcType=BIT}
+                    </if>
+                    <if test="name != null">
+                        and name = #{name,jdbcType=VARCHAR}
+                    </if>
+                    <if test="homePageFlag != null">
+                        and home_page_flag = #{homePageFlag,jdbcType=BIT}
+                    </if>
+                </otherwise>
+            </choose>
+
+        </where>
+    </select>
+</mapper>

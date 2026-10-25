@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.zkmall.business.dao.product.CereRecommendProductDAO">
+    <resultMap id="BaseResultMap" type="com.shop.zkmall.commons.domain.product.CereRecommendProduct">
+        <id column="product_id" jdbcType="BIGINT" property="productId"/>
+        <result column="shop_id" jdbcType="BIGINT" property="shopId"/>
+        <result column="recommend_type" jdbcType="INTEGER" property="recommendType"/>
+        <result column="create_time" jdbcType="VARCHAR" property="createTime"/>
+        <result column="update_time" jdbcType="VARCHAR" property="updateTime"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        product_id
+        , recommend_type, shop_id,
+        create_time, update_time
+    </sql>
+
+    <insert id="insertOrUpdate">
+        insert into cere_recommend_product
+        (product_id, recommend_type, shop_id,
+         create_time, update_time)
+        values (#{productId}, #{recommendType}, #{shopId},
+                #{createTime}, #{updateTime}) on duplicate key
+        update update_time =
+        values (update_time)
+    </insert>
+
+    <select id="selectByProductIdList" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from cere_recommend_product
+        where product_id in
+        (
+        <foreach collection="list" item="productId" separator=",">
+            #{productId}
+        </foreach>
+        )
+    </select>
+</mapper>

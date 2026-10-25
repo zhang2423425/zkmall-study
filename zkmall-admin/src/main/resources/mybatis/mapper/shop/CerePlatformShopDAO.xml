@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.zkmall.admin.dao.shop.CerePlatformShopDAO">
+    <resultMap id="BaseResultMap" type="com.shop.zkmall.commons.domain.shop.CerePlatformShop">
+        <id column="shop_id" jdbcType="BIGINT" property="shopId"/>
+        <result column="shop_code" jdbcType="VARCHAR" property="shopCode"/>
+        <result column="shop_name" jdbcType="VARCHAR" property="shopName"/>
+        <result column="shop_brief" jdbcType="VARCHAR" property="shopBrief"/>
+        <result column="shop_phone" jdbcType="VARCHAR" property="shopPhone"/>
+        <result column="shop_password" jdbcType="VARCHAR" property="shopPassword"/>
+        <result column="charge_person_name" jdbcType="VARCHAR" property="chargePersonName"/>
+        <result column="charge_person_phone" jdbcType="VARCHAR" property="chargePersonPhone"/>
+        <result column="shop_adress" jdbcType="VARCHAR" property="shopAdress"/>
+        <result column="effective_date" jdbcType="VARCHAR" property="effectiveDate"/>
+        <result column="effective_year" jdbcType="INTEGER" property="effectiveYear"/>
+        <result column="contract_state" jdbcType="BIT" property="contractState"/>
+        <result column="authentication_state" jdbcType="BIT" property="authenticationState"/>
+        <result column="check_state" jdbcType="BIT" property="checkState"/>
+        <result column="state" jdbcType="BIT" property="state"/>
+        <result column="authen_type" jdbcType="BIT" property="authenType"/>
+        <result column="create_time" jdbcType="VARCHAR" property="createTime"/>
+        <result column="update_time" jdbcType="VARCHAR" property="updateTime"/>
+        <result column="audit_live" jdbcType="BIT" property="auditLive"/>
+        <result column="audit_live_product" jdbcType="BIT" property="auditLiveProduct"/>
+        <result column="hot_flag" jdbcType="BIT" property="hotFlag"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        shop_id, shop_code, shop_name, shop_brief, shop_phone, shop_password, charge_person_name,
+        charge_person_phone, shop_adress, effective_date, effective_year, contract_state,
+        authentication_state, check_state, `state`,authen_type, create_time, update_time,
+        audit_live, audit_live_product, hot_flag
+    </sql>
+
+    <delete id="cleanShop">
+        delete from cere_platform_shop where shop_id = #{shopId};
+
+        delete a from cere_after_dilever a join
+        cere_shop_order b on b.order_id = a.order_id and b.shop_id = #{shopId};
+
+        delete a from cere_after_product_attribute a
+        join cere_after_product b on b.after_product_id = a.after_product_id
+        join cere_shop_product c on c.product_id = b.product_id and c.shop_id = #{shopId};
+
+        delete a from cere_after_product a
+        join cere_shop_product b on b.product_id = a.product_id and b.shop_id = #{shopId};
+
+        delete from cere_business_shop where shop_id = #{shopId};
+
+        delete from cere_buyer_collect where shop_id = #{shopId};
+
+        delete a from cere_buyer_comment_like a
+        join cere_shop_comment b on b.comment_id = a.comment_id and b.shop_id = #{shopId};
+
+        delete from cere_buyer_footprint where shop_id = #{shopId};
+
+        delete a from cere_comment_word a
+        join cere_shop_product b on b.product_id = a.product_id and b.shop_id = #{shopId};
+
+        delete a from cere_label_source a
+        join cere_shop_label b on b.label_id = a.label_id and b.shop_id = #{shopId};
+
+        delete from cere_shop_label where shop_id = #{shopId};
+
+        delete a from cere_logistics_charge a
+        join cere_order_logistics b on b.logistics_id = a.logistics_id and b.shop_id = #{shopId};
+
+        delete a from cere_order_after a
+        join cere_shop_order b on b.order_id = a.order_id and b.shop_id = #{shopId};
+
+        delete a from cere_order_dilever a
+        join cere_shop_order b on b.order_id = a.order_id and b.shop_id = #{shopId};
+
+        delete from cere_order_logistics where shop_id = #{shopId};
+
+        delete from cere_pay_log where shop_id = #{shopId};
+
+        delete a from cere_platform_after a
+        join cere_shop_order b on b.order_id = a.order_id and b.shop_id = #{shopId};
+
+
+        delete a from cere_platform_business a
+        join cere_business_shop b on b.business_user_id = a.business_user_id and b.shop_id = #{shopId};
+
+        delete a from cere_business_user_role a
+        join cere_business_shop b on b.business_user_id = a.business_user_id and b.shop_id = #{shopId};
+
+        delete a from cere_platform_role_permission a
+        join cere_platform_role b on b.role_id = a.role_id and b.project = #{shopId};
+
+        delete from cere_platform_permission where project = #{shopId};
+
+        delete from cere_platform_role where project = #{shopId};
+
+        delete from cere_platform_shop where shop_id = #{shopId};
+
+        delete from cere_privacy_verify_setting where project = #{shopId};
+
+        delete a from cere_product_image a
+        join cere_shop_product b on b.product_id = a.product_id and b.shop_id = #{shopId};
+
+        delete a from cere_product_problem a
+        join cere_shop_product b on b.product_id = a.product_id and b.shop_id = #{shopId};
+
+        delete a from cere_sku_name a
+        join cere_product_sku b on b.sku_id = a.sku_id
+        join cere_shop_product c on c.product_id = b.product_id and c.shop_id = #{shopId};
+
+        delete a from cere_product_sku a
+        join cere_shop_product b on b.product_id = a.product_id and b.shop_id = #{shopId};
+
+        delete from cere_shop_bank where shop_id = #{shopId};
+
+        delete from cere_shop_banner where shop_id = #{shopId};
+
+        delete from cere_shop_check where shop_id = #{shopId};
+
+        delete from cere_shop_comment where shop_id = #{shopId};
+
+        delete from cere_shop_enterprise where shop_id = #{shopId};
+
+        delete a from cere_shop_group_detail a
+        join cere_shop_group b on b.shop_group_id = a.shop_group_id and b.shop_id = #{shopId};
+
+        delete from cere_shop_group where shop_id = #{shopId};
+
+        delete from cere_shop_enterprise where shop_id = #{shopId};
+
+        delete from cere_shop_individual_businesses where shop_id = #{shopId};
+
+        delete from cere_shop_other_organizations where shop_id = #{shopId};
+
+        delete from cere_shop_personal where shop_id = #{shopId};
+
+        delete from cere_shop_product where shop_id = #{shopId};
+
+        delete from cere_shop_return where shop_id = #{shopId};
+
+        delete from cere_shop_visit where shop_id = #{shopId};
+
+        delete from cere_shop_withdrawal where shop_id = #{shopId};
+
+        delete a from cere_order_reconciliation a
+        join cere_shop_order b on b.order_id = a.order_id and b.shop_id = #{shopId};
+
+        delete a from cere_order_product_attribute a
+        join cere_order_product b on b.order_product_id = a.order_product_id
+        join cere_shop_order c on c.order_id = b.order_id and c.shop_id = #{shopId};
+
+        delete a from cere_order_product a
+        join cere_shop_order b on b.order_id = a.order_id and b.shop_id = #{shopId};
+
+        delete a from cere_order_return a
+        join cere_shop_order b on a.order_id = b.order_id and b.shop_id = #{shopId};
+
+        delete from cere_shop_order where shop_id = #{shopId};
+
+        delete a from cere_cart_attribute a
+        join cere_shop_cart b on b.cart_id = a.cart_id and b.shop_id = #{shopId};
+
+        delete from cere_shop_cart where shop_id = #{shopId};
+    </delete>
+
+    <select id="findByShopName" parameterType="java.lang.Object"
+            resultType="com.shop.zkmall.commons.domain.shop.CerePlatformShop">
+        SELECT shop_id FROM cere_platform_shop where shop_name=#{shopName}
+    </select>
+
+    <select id="findByPhone" parameterType="java.lang.Object"
+            resultType="com.shop.zkmall.commons.domain.shop.CerePlatformShop">
+        SELECT shop_id FROM cere_platform_shop where shop_phone=#{shopPhone}
+    </select>
+
+    <select id="checkShopIdByName" parameterType="java.lang.Object"
+            resultType="com.shop.zkmall.commons.domain.shop.CerePlatformShop">
+        SELECT shop_id FROM cere_platform_shop where shop_name=#{shopName} and shop_id<![CDATA[!= ]]>#{shopId}
+    </select>
+
+    <select id="checkShopIdByPhone" parameterType="java.lang.Object"
+            resultType="com.shop.zkmall.commons.domain.shop.CerePlatformShop">
+        SELECT shop_id FROM cere_platform_shop where shop_phone=#{shopPhone} and shop_id<![CDATA[!= ]]>#{shopId}
+    </select>
+
+    <select id="findBusinessByShopId" parameterType="java.lang.Object"
+            resultType="com.shop.zkmall.commons.domain.business.CerePlatformBusiness">
+        SELECT a.business_user_id from cere_platform_business a
+        LEFT JOIN cere_business_shop b ON a.business_user_id=b.business_user_id
+        LEFT JOIN cere_platform_shop c ON b.shop_id=c.shop_id
+        where c.shop_id=#{shopId}
+    </select>
+
+    <select id="getById" parameterType="java.lang.Object" resultType="com.shop.zkmall.admin.page.shop.ShopGetAll">
+        SELECT a.shop_id, a.shop_code, a.shop_name, a.shop_brief, a.shop_phone, a.shop_password, a.charge_person_name,
+        a.charge_person_phone, a.shop_adress, a.effective_date, a.effective_year, a.contract_state,
+        a.authentication_state, a.check_state, a.`state`, a.authen_type, a.create_time, a.update_time,
+        a.audit_live, a.audit_live_product, a.hot_flag,
+        b.business_user_id
+        FROM cere_platform_shop a,
+        cere_platform_business b
+        where a.charge_person_phone = b.phone
+        and shop_id = #{shopId}
+    </select>
+
+    <select id="getAll" parameterType="com.shop.zkmall.admin.param.shop.ShopGetAllParam"
+            resultType="com.shop.zkmall.admin.page.shop.ShopGetAll">
+        SELECT a.shop_id, a.shop_name, a.shop_code, a.charge_person_name, a.charge_person_phone,
+        a.state, a.create_time, a.contract_state, a.hot_flag
+        FROM cere_platform_shop a
+       <where>
+           <if test="shopName!=null and shopName!=''">
+               and shop_name like concat('%',#{shopName},'%')
+           </if>
+           <if test="shopCode!=null and shopCode!=''">
+               and shop_code like concat('%',#{shopCode},'%')
+           </if>
+           <if test="chargePersonName!=null and chargePersonName!=''">
+               and charge_person_name like concat('%',#{chargePersonName},'%')
+           </if>
+           <if test="contractState!=null">
+               and contract_state=#{contractState}
+           </if>
+       </where>
+        order by create_time desc
+    </select>
+
+    <select id="findShop" parameterType="java.lang.Object" resultType="com.shop.zkmall.admin.page.shop.Shop">
+        SELECT shop_id,shop_logo,shop_name,shop_adress,shop_brief,shop_phone,authen_type,
+        authentication_state,check_state,effective_date,effective_year,charge_person_name,charge_person_phone
+        FROM cere_platform_shop where shop_id = #{shopId}
+    </select>
+
+    <update id="updateDate" parameterType="com.shop.zkmall.commons.domain.shop.CerePlatformShop">
+        update cere_platform_shop
+        <set>
+            <if test="effectiveDate != null and effectiveDate!=''">
+                effective_date = #{effectiveDate,jdbcType=VARCHAR},
+            </if>
+            <if test="effectiveYear != null">
+                effective_year = #{effectiveYear,jdbcType=INTEGER},
+            </if>
+            <if test="checkState != null">
+                check_state = #{checkState,jdbcType=BIT},
+            </if>
+            <if test="updateTime != null and updateTime!=''">
+                update_time = #{updateTime,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where shop_id = #{shopId,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateShopStop" parameterType="com.shop.zkmall.commons.domain.shop.CerePlatformShop">
+        update cere_platform_shop
+        <set>
+            <if test="contractState != null">
+                contract_state = #{contractState,jdbcType=BIT},
+            </if>
+            <if test="state != null">
+                `state` = #{state,jdbcType=BIT},
+            </if>
+            <if test="updateTime != null and updateTime!=''">
+                update_time = #{updateTime,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where shop_id = #{shopId,jdbcType=BIGINT}
+    </update>
+
+    <select id="getAllFinance" parameterType="com.shop.zkmall.admin.param.finance.FinanceParam"
+            resultType="com.shop.zkmall.admin.page.finance.Finance">
+        SELECT a.shop_id,a.shop_name,a.shop_code,ifnull(b.revenue, 0) as revenue from cere_platform_shop a
+        LEFT JOIN (SELECT SUM(price) revenue,shop_id from cere_shop_order where state IN(2,3,4) GROUP BY shop_id)
+        b ON a.shop_id=b.shop_id
+        <where>
+            <if test="shopName!=null and shopName!=''">
+                and a.shop_name like concat('%',#{shopName},'%')
+            </if>
+            <if test="shopCode!=null and shopCode!=''">
+                and a.shop_code like concat('%',#{shopCode},'%')
+            </if>
+        </where>
+    </select>
+
+    <select id="finFrozen" parameterType="java.lang.Object" resultType="java.math.BigDecimal">
+        SELECT IF(SUM(price) IS NULL,0,SUM(price)) FROM cere_shop_order where state IN(2,3)
+        <if test="shopId!=null">
+            and shop_id=#{shopId}
+        </if>
+    </select>
+
+    <select id="findHaveWithdrawal" parameterType="java.lang.Object" resultType="java.math.BigDecimal">
+        SELECT IF(SUM(withdrawal_money) IS NULL,0,SUM(withdrawal_money)) FROM cere_shop_withdrawal
+        where state=1
+        <if test="shopId!=null">
+            and shop_id=#{shopId}
+        </if>
+    </select>
+
+    <select id="findRefund" parameterType="java.lang.Object" resultType="java.math.BigDecimal">
+        SELECT IF(SUM(money) IS NULL,0,SUM(money)) FROM cere_order_reconciliation a
+        LEFT JOIN cere_shop_order b ON a.order_id=b.order_id
+        where a.type=2
+        <if test="shopId!=null">
+            and b.shop_id=#{shopId}
+        </if>
+    </select>
+
+    <select id="findRevenue" resultType="java.math.BigDecimal">
+        SELECT IF(SUM(price) IS NULL,0,SUM(price)) FROM cere_shop_order where state IN(2,3,4)
+    </select>
+
+    <select id="getAllWithdrawableMoney" resultType="java.math.BigDecimal">
+        SELECT IF(SUM(price) IS NULL,0,SUM(price)) FROM cere_shop_order where state=4
+    </select>
+
+    <select id="getWithdrawableStayMoney" resultType="java.math.BigDecimal">
+        SELECT IF(SUM(withdrawal_money) IS NULL,0,SUM(withdrawal_money)) FROM cere_shop_withdrawal
+        where state=0
+    </select>
+
+    <select id="findBusinessId" parameterType="java.lang.Object" resultType="java.lang.Long">
+        SELECT a.business_user_id FROM cere_platform_business a
+        LEFT JOIN cere_business_shop b ON a.business_user_id=b.business_user_id
+        LEFT JOIN cere_platform_shop c ON b.shop_id=c.shop_id
+        where c.shop_id=#{shopId}
+    </select>
+
+    <select id="findBusiness" parameterType="java.lang.Object"
+            resultType="com.shop.zkmall.commons.domain.business.CerePlatformBusiness">
+        SELECT * FROM cere_platform_business where business_user_id=#{businessUserId}
+    </select>
+
+    <select id="findAll" resultType="com.shop.zkmall.commons.domain.shop.CerePlatformShop">
+        SELECT * FROM cere_platform_shop where check_state=1 and state=1
+    </select>
+
+    <select id="findWithdrawing" resultType="java.math.BigDecimal">
+        SELECT IF(SUM(withdrawal_money) IS NULL,0,SUM(withdrawal_money)) FROM cere_shop_withdrawal
+        where shop_id = #{shopId} and state = 0
+    </select>
+
+    <select id="selectHotShopList" resultType="com.shop.zkmall.admin.page.shop.Shop">
+        select
+        a.shop_id, shop_name, shop_logo,
+        count(*) as cnt
+        from cere_shop_visit a
+        join cere_platform_shop b on b.shop_id = a.shop_id
+        where visit_time >= date_sub(now(), interval 1 month)
+        group by a.shop_id
+        order by cnt desc
+        limit 5
+    </select>
+</mapper>

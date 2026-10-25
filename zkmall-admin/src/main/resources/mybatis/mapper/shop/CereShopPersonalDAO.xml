@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.zkmall.admin.dao.shop.CereShopPersonalDAO">
+    <resultMap id="BaseResultMap" type="com.shop.zkmall.commons.domain.shop.CereShopPersonal">
+        <result column="shop_id" jdbcType="BIGINT" property="shopId"/>
+        <result column="personal_name" jdbcType="VARCHAR" property="personalName"/>
+        <result column="personal_card_type" jdbcType="BIGINT" property="personalCardType"/>
+        <result column="personal_id_card" jdbcType="VARCHAR" property="personalIdCard"/>
+        <result column="personal_card_start_time" jdbcType="VARCHAR" property="personalCardStartTime"/>
+        <result column="personal_card_end_time" jdbcType="VARCHAR" property="personalCardEndTime"/>
+        <result column="personal_card_positive" jdbcType="VARCHAR" property="personalCardPositive"/>
+        <result column="personal_card_side" jdbcType="VARCHAR" property="personalCardSide"/>
+        <result column="personal_card_hand" jdbcType="VARCHAR" property="personalCardHand"/>
+        <result column="administrators_phone" jdbcType="VARCHAR" property="administratorsPhone"/>
+        <result column="administrators_email" jdbcType="VARCHAR" property="administratorsEmail"/>
+        <result column="account_open_bank" jdbcType="BIGINT" property="accountOpenBank"/>
+        <result column="account_bank_region" jdbcType="VARCHAR" property="accountBankRegion"/>
+        <result column="account_bank_card" jdbcType="VARCHAR" property="accountBankCard"/>
+        <result column="shop_abbreviation" jdbcType="VARCHAR" property="shopAbbreviation"/>
+        <result column="service_phone" jdbcType="VARCHAR" property="servicePhone"/>
+        <result column="service_providing" jdbcType="BIGINT" property="serviceProviding"/>
+        <result column="shop_index_image" jdbcType="VARCHAR" property="shopIndexImage"/>
+        <result column="shop_backstage_image" jdbcType="VARCHAR" property="shopBackstageImage"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="create_time" jdbcType="VARCHAR" property="createTime"/>
+        <result column="update_time" jdbcType="VARCHAR" property="updateTime"/>
+    </resultMap>
+    <insert id="insertSelective" parameterType="com.shop.zkmall.commons.domain.shop.CereShopPersonal">
+        insert into cere_shop_personal
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="shopId != null">
+                shop_id,
+            </if>
+            <if test="personalName != null and personalName!=''">
+                personal_name,
+            </if>
+            <if test="personalCardType != null">
+                personal_card_type,
+            </if>
+            <if test="personalIdCard != null and personalIdCard!=''">
+                personal_id_card,
+            </if>
+            <if test="personalCardStartTime != null and personalCardStartTime!=''">
+                personal_card_start_time,
+            </if>
+            <if test="personalCardEndTime != null and personalCardEndTime!=''">
+                personal_card_end_time,
+            </if>
+            <if test="personalCardPositive != null and personalCardPositive!=''">
+                personal_card_positive,
+            </if>
+            <if test="personalCardSide != null and personalCardSide!=''">
+                personal_card_side,
+            </if>
+            <if test="personalCardHand != null and personalCardHand!=''">
+                personal_card_hand,
+            </if>
+            <if test="administratorsPhone != null and administratorsPhone!=''">
+                administrators_phone,
+            </if>
+            <if test="administratorsEmail != null and administratorsEmail!=''">
+                administrators_email,
+            </if>
+            <if test="accountOpenBank != null">
+                account_open_bank,
+            </if>
+            <if test="accountBankRegion != null and accountBankRegion!=''">
+                account_bank_region,
+            </if>
+            <if test="accountBankCard != null and accountBankCard!=''">
+                account_bank_card,
+            </if>
+            <if test="shopAbbreviation != null and shopAbbreviation!=''">
+                shop_abbreviation,
+            </if>
+            <if test="servicePhone != null and servicePhone!=''">
+                service_phone,
+            </if>
+            <if test="serviceProviding != null">
+                service_providing,
+            </if>
+            <if test="shopIndexImage != null and shopIndexImage!=''">
+                shop_index_image,
+            </if>
+            <if test="shopBackstageImage != null and shopBackstageImage!=''">
+                shop_backstage_image,
+            </if>
+            <if test="remark != null and remark!=''">
+                remark,
+            </if>
+            <if test="createTime != null and createTime!=''">
+                create_time,
+            </if>
+            <if test="updateTime != null and updateTime!=''">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="shopId != null">
+                #{shopId,jdbcType=BIGINT},
+            </if>
+            <if test="personalName != null and personalName!=''">
+                #{personalName,jdbcType=VARCHAR},
+            </if>
+            <if test="personalCardType != null">
+                #{personalCardType,jdbcType=BIGINT},
+            </if>
+            <if test="personalIdCard != null and personalIdCard!=''">
+                #{personalIdCard,jdbcType=VARCHAR},
+            </if>
+            <if test="personalCardStartTime != null and personalCardStartTime!=''">
+                #{personalCardStartTime,jdbcType=VARCHAR},
+            </if>
+            <if test="personalCardEndTime != null and personalCardEndTime!=''">
+                #{personalCardEndTime,jdbcType=VARCHAR},
+            </if>
+            <if test="personalCardPositive != null and personalCardPositive!=''">
+                #{personalCardPositive,jdbcType=VARCHAR},
+            </if>
+            <if test="personalCardSide != null and personalCardSide!=''">
+                #{personalCardSide,jdbcType=VARCHAR},
+            </if>
+            <if test="personalCardHand != null and personalCardHand!=''">
+                #{personalCardHand,jdbcType=VARCHAR},
+            </if>
+            <if test="administratorsPhone != null and administratorsPhone!=''">
+                #{administratorsPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="administratorsEmail != null and administratorsEmail!=''">
+                #{administratorsEmail,jdbcType=VARCHAR},
+            </if>
+            <if test="accountOpenBank != null">
+                #{accountOpenBank,jdbcType=BIGINT},
+            </if>
+            <if test="accountBankRegion != null and accountBankRegion!=''">
+                #{accountBankRegion,jdbcType=VARCHAR},
+            </if>
+            <if test="accountBankCard != null and accountBankCard!=''">
+                #{accountBankCard,jdbcType=VARCHAR},
+            </if>
+            <if test="shopAbbreviation != null and shopAbbreviation!=''">
+                #{shopAbbreviation,jdbcType=VARCHAR},
+            </if>
+            <if test="servicePhone != null and servicePhone!=''">
+                #{servicePhone,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceProviding != null">
+                #{serviceProviding,jdbcType=BIGINT},
+            </if>
+            <if test="shopIndexImage != null and shopIndexImage!=''">
+                #{shopIndexImage,jdbcType=VARCHAR},
+            </if>
+            <if test="shopBackstageImage != null and shopBackstageImage!=''">
+                #{shopBackstageImage,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null and remark!=''">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null and createTime!=''">
+                #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null and updateTime!=''">
+                #{updateTime,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="findByShopId" parameterType="java.lang.Object"
+            resultType="com.shop.zkmall.commons.domain.shop.CereShopPersonal">
+        SELECT * FROM cere_shop_personal where shop_id=#{shopId}
+    </select>
+</mapper>

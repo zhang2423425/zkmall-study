@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.zkmall.admin.dao.canvas.CerePlatformCanvasPageDAO">
+    <resultMap id="BaseResultMap" type="com.shop.zkmall.commons.domain.canvas.CerePlatformCanvasPage">
+        <id column="canvas_id" jdbcType="BIGINT" property="canvasId"/>
+        <result column="terminal" jdbcType="BIT" property="terminal"/>
+        <result column="json" jdbcType="VARCHAR" property="json"/>
+        <result column="type" jdbcType="BIT" property="type"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="home_page_flag" jdbcType="BIT" property="homePageFlag"/>
+        <result column="default_page" jdbcType="BIT" property="defaultPage"/>
+        <result column="create_time" jdbcType="VARCHAR" property="createTime"/>
+        <result column="update_time" jdbcType="VARCHAR" property="updateTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        canvas_id, terminal, json, type, name, home_page_flag, default_page, create_time, update_time
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from cere_platform_canvas_page
+        where canvas_id = #{canvasId,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from cere_platform_canvas_page
+        where canvas_id = #{canvasId,jdbcType=BIGINT}
+    </delete>
+    <insert id="insertSelective" keyColumn="canvas_id" keyProperty="canvasId"
+            parameterType="com.shop.zkmall.commons.domain.canvas.CerePlatformCanvasPage" useGeneratedKeys="true">
+        insert into cere_platform_canvas_page
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="terminal != null">
+                terminal,
+            </if>
+            <if test="json != null">
+                json,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="coverLogo != null">
+                cover_logo,
+            </if>
+            <if test="templateId != null">
+                template_id,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="terminal != null">
+                #{terminal,jdbcType=BIT},
+            </if>
+            <if test="json != null">
+                #{json,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=BIT},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="coverLogo != null">
+                #{coverLogo,jdbcType=VARCHAR},
+            </if>
+            <if test="templateId != null">
+                #{templateId,jdbcType=BIGINT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective"
+            parameterType="com.shop.zkmall.commons.domain.canvas.CerePlatformCanvasPage">
+        update cere_platform_canvas_page
+        <set>
+            <if test="terminal != null">
+                terminal = #{terminal,jdbcType=BIT},
+            </if>
+            <if test="json != null">
+                json = #{json,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=BIT},
+            </if>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="coverLogo != null">
+                cover_logo = #{coverLogo,jdbcType=VARCHAR},
+            </if>
+            <if test="templateId != null">
+                template_id = #{templateId,jdbcType=BIGINT},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where canvas_id = #{canvasId,jdbcType=BIGINT}
+    </update>
+    <update id="cleanHomePage">
+        update cere_platform_canvas_page
+        set home_page_flag = false
+        where terminal = #{terminal}
+    </update>
+    <update id="settingHomePage">
+        update cere_platform_canvas_page
+        set home_page_flag = true
+        where canvas_id = #{canvasId}
+    </update>
+    <select id="getCanvas" parameterType="com.shop.zkmall.commons.domain.canvas.CerePlatformCanvasPage"
+            resultType="com.shop.zkmall.commons.domain.canvas.CerePlatformCanvasPage">
+        SELECT * FROM cere_platform_canvas_page
+        <where>
+            <if test="terminal != null">
+                and terminal = #{terminal,jdbcType=BIT}
+            </if>
+            <if test="json != null">
+                and json = #{json,jdbcType=VARCHAR}
+            </if>
+            <if test="type != null">
+                and type = #{type,jdbcType=BIT}
+            </if>
+            <if test="name != null">
+                and name = #{name,jdbcType=VARCHAR}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime,jdbcType=VARCHAR}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+    <select id="selectHomePageCanvasList" resultType="com.shop.zkmall.commons.domain.canvas.CerePlatformCanvasPage">
+        SELECT * FROM cere_platform_canvas_page
+        <where>
+            page_type = 2
+            <if test="search != null">
+                and name like concat('%',#{search},'%')
+            </if>
+            <if test="type != null">
+                and type = #{type}
+            </if>
+            <if test="terminal != null">
+                and terminal = #{terminal}
+            </if>
+        </where>
+    </select>
+    <select id="getTemplatePage" resultType="com.shop.zkmall.commons.domain.canvas.CerePlatformCanvasPage">
+        SELECT * FROM cere_platform_canvas_page
+        where page_type = 1
+        <if test="type != null">
+            and type = #{type}
+        </if>
+        <if test="terminal != null">
+            and terminal = #{terminal}
+        </if>
+    </select>
+</mapper>

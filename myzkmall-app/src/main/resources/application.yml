@@ -1,0 +1,110 @@
+server:
+  port: 9008
+
+spring:
+  jmx:
+    default-domain: admin-server
+  main:
+    allow-bean-definition-overriding: true
+    allow-circular-references: true
+  # 开发环境|dev正式环境prod
+  profiles:
+    active: app-local,security
+  # jackson
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+      enabled: true
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+# springdoc-openapi项目配置
+springdoc:
+  swagger-ui:
+    #自定义swagger前端请求路径,输入http:localhost:8080/swagger-ui会自动重定向到swagger页面
+    path: /swagger-ui
+    tags-sorter: alpha
+    operations-sorter: alpha
+  api-docs:
+    path: /v3/api-docs  #swagger后端请求地址
+    enabled: true   #是否开启文档功能
+  group-configs: #分组配置,可配置多个分组
+    - group: 'default'             #分组名称
+      paths-to-match: '/**'        #配置需要匹配的路径
+      packages-to-scan: com.shop.zkmall.app    #配置要扫描包的路径,一般配置到启动类所在的包名
+
+# knife4j的增强配置，不需要增强可以不配
+knife4j:
+  enable: true    #开启knife4j,无需添加@EnableKnife4j注解
+  setting:
+    language: zh_cn   #中文
+    swagger-model-name: 实体列表   #默认为：Swagger Models
+  #开启Swagger的Basic认证功能,默认是false,开启后访问文档页面时会弹出用户名和密码输入框
+  basic:
+    enable: false
+    # Basic认证用户名
+    username: admin
+    # Basic认证密码
+    password: YOUR_PASSWORD
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+# Mybatis-plus
+mybatis-plus:
+  mapper-locations: mybatis/mapper/*/*.xml
+  type-aliases-package: com.shop.zkmall.commons.domain
+  configuration.map-underscore-to-camel-case: true
+# Mybatis
+#mybatis:
+  #MyBatis相关自定义配置
+  #configLocation: classpath:mybatis/mybatis-config.xml
+  #实体类所做包
+  #type-aliases-package: com.shop.zkmall.commons.domain
+  #mapper.xml所在位置
+  #mapperLocations: classpath:mybatis/mapper/*/*.xml
+
+#快递100配置
+kd100:
+  key:
+  customer:
+  queryUrl: https://poll.kuaidi100.com/poll/query.do
+
+#快递鸟配置
+kdniao:
+  eBusinessID:
+  appKey:
+  queryUrl: http://api.kdniao.com/Ebusiness/EbusinessOrderHandle.aspx
+  getCodeUrl: https://api.kdniao.com/Ebusiness/EbusinessOrderHandle.aspx
+
+
+#商品缓存时间，单位：毫秒
+productCacheTime: 300000
+
+#密码加密传输，前端公钥加密，后端私钥解密
+rsa:
+  private_key: MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDMY3nh8uKCJoU7VOvW17wDQ7LvW11MtaorxKyuBCmv9/axZhaKl3RzLbV08+OFFDI8RcNAe262QQCU5/mkyZx/Ecn4X8MD8Y7FHHNNaIhurQdqpDxEKiLPnVheSgRlAPRG2alt3R6U8MZFeUL1pTGwtU7V5iqy9LMJPy+WIQB3d9HtQaU9jb62uP3OOVQ/6bcoz1Sjwzp5L4qeyVkpCF9DSRBxeTAABGwmvUnL6eh24ExNRC1ALiEKGARcV53PuiIoXDur00ikJPPd1qZIAgfEoSa2Jc0qwiaq52/qkZIOC1qmwm7KVbDvR6f4UgyFPgzjsw1n1OShCzdZKpFDkvdDAgMBAAECggEARHk/KBd7Eydck1gL+tojvuQ7Wj09sKlb7XXidBoo7S8hkqUlACFlfgDePeRHYRo3CkJE+6Feoeh9DWX6GN8Ccv++rltGtleDAT5a0qAmtQ164ptLJXsIVo3cQRqDBmOfcu0Q+iGOUU+o3TWW3T0OvKjBVJ/bxkB8iqiEhMNhqKP+gsb9EQh4pLDucORUD5AlX6mG3WGOIFs5zrRF9f+ve6hcg40yrVyk1nYOC8S+V4ecVFhAg238S+uKkOPTSuCXHb17OsLWFxmDizjEZGKAOUedfKOgP8QGQDmnM95JW4yxhiR6mbyl3mwSzjWbIy4t9MYkxR8R90AFq5KHasKjgQKBgQDod2MT1elz6oN2T6bOoF/u2bo8hyWVIMZWW9BB5vTWOV0Gk1fIrBCdUDK5zkHzKMwOXi0b/DKWOEm4fABPJoZqRLSMt/zjCzTUatjbzsRUWxo7vBPY1fkudQgrYZXifF19t3P4F4RR4G+J+uwTbCleBbwRstct3R9fxr/FmcUG8QKBgQDhFGxx4Hb8hjuOSEyZcigESd8mfT8RenEDpDy1kfMCxgSRinDNq4w+jFoZUhYYJBTZkWLYaqnhi53PTJu5Yq+FWjQl4ODJkXr7b31mI+exISVFUCb6Zrzd200D7DaHlAin933XBz4jL0g465/KE7O1ONzNB7rkKhVi7uZCk7hpcwKBgQDEONoZyStom+BhwnQj3716aLBKHS29BlBEXvWYWzH5jawXO9ISYiMYFrTqn86NSLeNvTLId4XfxR19KrY8GWHGW74nNbqxjykF0DbCu3J/XfLzzxrVoi/WZhUCQTn6Vk24K10pYfhgAFlGF9ajwl3crmyEZ/g4D3lHKAWB7v0fkQKBgDMzLigJY4e2ET4gfCw7p5ayJyzeOMaFD8hAR/8VoC31VXy1/UsLxu9DhgtUfOoo6wVC6TVJrjM8Sz2os5PMOxkel9Y1/Wxcx5kCl4fwivfkDlJiFTvIuxXMmQxXY2Ab8Iwk5F9RqnTegJNSJhsVuD91G+UX6Q+V8x96MK7cY4q5AoGAI519Yi3wA9eDPm9aO06g/zPaYUXxYqz0SVj1K6/qMVgCaKZrQnBgPWD5PX+6x5Lr53p//cqTbPJUttJfVN1V+WtSRp48aEfXaxL5D1B78uh9C7GxIT2ZJVAEwzKFH7g5Lg5lbVZ5b6JyqIh9VkbsWtma4NfmY0K08rQVdGXf8zA=
+
+#用户默认头像地址
+defaultHeadImg: https://zk-cereshop.oss-cn-shenzhen.aliyuncs.com/zkthink/2022-01-11/6a05d44b9e0947a2add5a37c94953750_default_head_img.png
+
+#查询sku实时信息表
+querySkuRealInfo: true
+
+#刷新sku实时信息的校验码verifyCode
+verifyCode: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+zkmall:
+  swagger:
+    enabled: true
+    title: "zkmall-app"
+    description: "zkmall-app接口文档"
+    version: 1.0
+  web:
+    web-log-type: 3

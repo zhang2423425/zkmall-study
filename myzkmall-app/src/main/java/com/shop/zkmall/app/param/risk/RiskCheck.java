@@ -1,0 +1,22 @@
+/*
+ * Copyright (C) 2017-2025
+ * ZKMall All rights reserved, Designed By 深圳中科鑫智科技有限公司
+ * Copyright authorization contact 18814114118
+ */
+package com.shop.zkmall.app.param.risk;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+/**
+ * 风控注解
+ *
+ * @author zkmall zkmallvip@163.com
+ */
+@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface RiskCheck {
+
+}

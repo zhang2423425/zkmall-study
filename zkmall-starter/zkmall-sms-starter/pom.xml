@@ -1,0 +1,20 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.shop</groupId>
+        <artifactId>zkmall-starter</artifactId>
+        <version>3.5.0</version>
+    </parent>
+
+    <packaging>pom</packaging>
+    <modules>
+        <module>zkmall-sms-core</module>
+        <module>zkmall-sms-miaoxin-starter</module>
+        <module>zkmall-sms-aliyun-starter</module>
+    </modules>
+
+    <artifactId>zkmall-sms-starter</artifactId>
+
+
+</project>

@@ -1,0 +1,34 @@
+/*
+ * Copyright (C) 2017-2025
+ * ZKMall All rights reserved, Designed By 深圳中科鑫智科技有限公司
+ * Copyright authorization contact 18814114118
+ */
+package com.shop.zkmall.admin.dao.notice;
+
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.shop.zkmall.admin.param.notice.NoticeGetAllParam;
+import com.shop.zkmall.commons.domain.notice.CereNotice;
+import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
+
+/**
+ * @author zkmall zkmallvip@163.com
+ */
+@Mapper
+public interface CereNoticeDAO extends BaseMapper<CereNotice> {
+
+    int deleteByPrimaryKey(Long noticeId);
+
+    int insertSelective(CereNotice record);
+
+    CereNotice selectByPrimaryKey(Long noticeId);
+
+    int updateByPrimaryKeySelective(CereNotice record);
+
+    int updateByPrimaryKey(CereNotice record);
+
+    List<CereNotice> getAll(NoticeGetAllParam param);
+
+    List<CereNotice> getNotices();
+}

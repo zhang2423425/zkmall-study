@@ -1,0 +1,97 @@
+server:
+  port: 9004
+
+spring:
+  jmx:
+    default-domain: business-server
+  main:
+    allow-bean-definition-overriding: true
+    allow-circular-references: true
+  # 运行环境 dev:开发环境|test:测试环境|prod:生产环境
+  profiles:
+    active: business-local,security
+  # jackson
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+      enabled: true
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+# springdoc-openapi项目配置
+springdoc:
+  swagger-ui:
+    #自定义swagger前端请求路径,输入http:localhost:8080/swagger-ui会自动重定向到swagger页面
+    path: /swagger-ui
+    tags-sorter: alpha
+    operations-sorter: alpha
+  api-docs:
+    path: /v3/api-docs  #swagger后端请求地址
+    enabled: true   #是否开启文档功能
+  group-configs: #分组配置,可配置多个分组
+    - group: 'default'             #分组名称
+      paths-to-match: '/**'        #配置需要匹配的路径
+      packages-to-scan: com.shop.zkmall.business    #配置要扫描包的路径,一般配置到启动类所在的包名
+
+# knife4j的增强配置，不需要增强可以不配
+knife4j:
+  enable: true    #开启knife4j,无需添加@EnableKnife4j注解
+  setting:
+    language: zh_cn   #中文
+    swagger-model-name: 实体列表   #默认为：Swagger Models
+  #开启Swagger的Basic认证功能,默认是false,开启后访问文档页面时会弹出用户名和密码输入框
+  basic:
+    enable: false
+    # Basic认证用户名
+    username: admin
+    # Basic认证密码
+    password: YOUR_PASSWORD
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+# Mybatis-plus
+mybatis-plus:
+  mapper-locations: mybatis/mapper/*/*.xml
+  type-aliases-package: com.shop.zkmall.commons.domain
+  configuration.map-underscore-to-camel-case: true
+
+# Mybatis
+#mybatis:
+  #MyBatis相关自定义配置
+  #configLocation: classpath:mybatis/mybatis-config.xml
+  #实体类所做包
+  #type-aliases-package: com.shop.zkmall.business.domain
+  #mapper.xml所在位置
+  #mapperLocations: classpath:mybatis/mapper/*/*.xml
+
+#密码加密传输，前端公钥加密，后端私钥解密
+rsa:
+  private_key: MIIBtDBOBgkqhkiG9w0BBQ0wQTApBgkqhkiG9w0BBQwwHAQIS3hq77ETRJgCAggAMAwGCCqGSIb3DQIJBQAwFAYIKoZIhvcNAwcECFTXSkmF9xd+BIIBYBaELk1OwuwTCXvcfc193I0HVHA2GQZHDuhGVfPhRuzDDzmLePbkygbNBXd3M5EWSBgfT5eHheFJ7ZG2Q71BMCBVm65NUZ6EomLwej4UulWyj2QlVkMEieZ6yfoF2ETj4T0ZE5JHKdvTJNnxYwvC5++EeYX824Q9VQT7e8jGbRBYlB4DIFQn4575D7Dayw/7CKF+iy28i/kKPVIcnblmpFn35BruM/QFPdpm+2dyvcCn5JGk3CJ0DSqGgN2sKhHynMHQuSqU0RQoTCnYh/QbGfMjjNSPvWsNUUMGmnxiqaJ9v2li1O+p40lC0sK5p/Bjz0Fx+ZG3TrPRZqO45TT5m9QabATEV4vx4lcr9OhW35NU2CdLyLYafTcw/m5Vkgbev53LBpXIeSt1qsFxzydiIVIsdqKyXHIpIsLYLeBflS0005HTa+aud68l2xkVRYB4RI1ePijGBhi1FfqF/hDiKdY=
+
+#用户默认头像地址
+defaultHeadImg: http://default_head_img.png
+
+#全局管理员手机号
+globalAdminPhone: 18579710035
+
+#自动收货时间 单位:毫秒
+autoDeliveryTime: 86400000
+
+#刷新sku实时信息的校验码verifyCode
+verifyCode: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+zkmall:
+  swagger:
+    enabled: true
+    title: "zkmall-business"
+    description: "zkmall-business接口文档"
+    version: 1.0
+  web:
+    web-log-type: 2

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.zkmall.admin.dao.risk.CereRiskBlackDAO">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.shop.zkmall.commons.domain.risk.CereRiskBlack">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="type" jdbcType="INTEGER" property="type"/>
+        <result column="ip" jdbcType="VARCHAR" property="ip"/>
+        <result column="buyer_user_id" jdbcType="BIGINT" property="buyerUserId"/>
+        <result column="state" jdbcType="TINYINT" property="state"/>
+        <result column="create_time" jdbcType="VARCHAR" property="createTime"/>
+        <result column="update_time" jdbcType="VARCHAR" property="updateTime"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, type, ip, buyer_user_id, state, create_time, update_time
+    </sql>
+
+    <select id="getUserBlackList" resultType="com.shop.zkmall.admin.page.risk.CereRiskUserBlack">
+        select a.id, a.type, a.buyer_user_id, a.state, a.create_time, a.update_time,
+        b.name, b.phone, b.wechat_open_id as openId
+        from cere_risk_black a left join cere_buyer_user b on a.buyer_user_id = b.buyer_user_id
+        where a.type = 2
+        <if test="search != null and search != ''">
+            and
+            (
+            a.buyer_user_id = #{search}
+            or
+            b.name like concat('%', #{search}, '%')
+            or
+            b.wechat_open_id = #{search}
+            or
+            b.phone like concat('%', #{search}, '%')
+            )
+        </if>
+        <if test="state != null">
+            and a.state = #{state}
+        </if>
+        order by a.update_time desc
+    </select>
+
+</mapper>

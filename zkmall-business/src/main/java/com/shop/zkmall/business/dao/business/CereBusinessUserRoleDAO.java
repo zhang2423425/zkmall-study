@@ -1,0 +1,29 @@
+/*
+ * Copyright (C) 2017-2025
+ * ZKMall All rights reserved, Designed By 深圳中科鑫智科技有限公司
+ * Copyright authorization contact 18814114118
+ */
+package com.shop.zkmall.business.dao.business;
+
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.shop.zkmall.business.page.role.PlatformUserRole;
+import com.shop.zkmall.commons.domain.business.CereBusinessUserRole;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+
+/**
+ * @author zkmall zkmallvip@163.com
+ */
+@Mapper
+public interface CereBusinessUserRoleDAO extends BaseMapper<CereBusinessUserRole> {
+
+    int insertSelective(CereBusinessUserRole record);
+
+    void deleteByUserId(@Param("businessUserId") Long businessUserId);
+
+    List<PlatformUserRole> findRolesByUserId(@Param("businessUserId") Long businessUserId);
+
+    List<Long> findByRoleId(Long roleId);
+}

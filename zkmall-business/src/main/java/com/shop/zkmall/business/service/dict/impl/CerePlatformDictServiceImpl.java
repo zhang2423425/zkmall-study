@@ -1,0 +1,48 @@
+/*
+ * Copyright (C) 2017-2025
+ * ZKMall All rights reserved, Designed By 深圳中科鑫智科技有限公司
+ * Copyright authorization contact 18814114118
+ */
+package com.shop.zkmall.business.service.dict.impl;
+
+import com.shop.zkmall.business.dao.dict.CerePlatformDictDAO;
+import com.shop.zkmall.business.service.dict.CerePlatformDictService;
+import com.shop.zkmall.commons.constant.IntegerEnum;
+import com.shop.zkmall.commons.constant.LongEnum;
+import com.shop.zkmall.commons.domain.dict.CerePlatformDict;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * @author zkmall zkmallvip@163.com
+ */
+@Slf4j
+@Service
+@RequiredArgsConstructor
+public class CerePlatformDictServiceImpl implements CerePlatformDictService {
+
+    private final CerePlatformDictDAO cerePlatformDictDAO;
+
+    @Override
+    public List<CerePlatformDict> getExpressSelect() {
+        List<CerePlatformDict> list = new ArrayList<>();
+        //查询当前物流查询策略
+        Integer express = cerePlatformDictDAO.findExpress();
+        if (IntegerEnum.EXPRESS_100.getCode().equals(express)) {
+            //查询快递100所属快递公司
+            list = cerePlatformDictDAO.findExpressSelect(LongEnum.EXPRESS_100.getCode());
+        } else if (IntegerEnum.EXPRESS_NIAO.getCode().equals(express)) {
+            list = cerePlatformDictDAO.findExpressSelect(LongEnum.EXPRESS_NIAO.getCode());
+        }
+        return list;
+    }
+
+    @Override
+    public List<CerePlatformDict> getSelect(String dictName) {
+        return cerePlatformDictDAO.getSelect(dictName);
+    }
+}

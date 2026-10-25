@@ -1,0 +1,79 @@
+/*
+ * Copyright (C) 2017-2025
+ * ZKMall All rights reserved, Designed By 深圳中科鑫智科技有限公司
+ * Copyright authorization contact 18814114118
+ */
+package com.shop.zkmall.app.service.dict.impl;
+
+import com.shop.zkmall.app.dao.dict.CerePlatformDictDAO;
+import com.shop.zkmall.app.service.dict.CerePlatformDictService;
+import com.shop.zkmall.commons.constant.IntegerEnum;
+import com.shop.zkmall.commons.constant.LongEnum;
+import com.shop.zkmall.commons.domain.dict.CerePlatformDict;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+/**
+ * @author zkmall zkmallvip@163.com
+ */
+@Slf4j
+@Service
+@RequiredArgsConstructor
+public class CerePlatformDictServiceImpl implements CerePlatformDictService {
+
+    private final CerePlatformDictDAO cerePlatformDictDAO;
+
+    @Override
+    public List<CerePlatformDict> getExpressSelect() {
+        List<CerePlatformDict> list = new ArrayList<>();
+        //查询当前物流查询策略
+        Integer express = cerePlatformDictDAO.findExpress();
+        if (IntegerEnum.EXPRESS_100.getCode().equals(express)) {
+            //查询快递100所属快递公司
+            list = cerePlatformDictDAO.findExpressSelect(LongEnum.EXPRESS_100.getCode());
+        } else if (IntegerEnum.EXPRESS_NIAO.getCode().equals(express)) {
+            list = cerePlatformDictDAO.findExpressSelect(LongEnum.EXPRESS_NIAO.getCode());
+        }
+        return list;
+    }
+
+    @Override
+    public List<String> getReasonSelect() {
+        return cerePlatformDictDAO.getReasonSelect();
+    }
+
+    @Override
+    public String findByCompany(String express, Long dictPid) {
+        return cerePlatformDictDAO.findByCompany(express, dictPid);
+    }
+
+    @Override
+    @Cacheable(value = "config", cacheManager = "caffeineCacheManager")
+    public CerePlatformDict getByName(String name) {
+        return cerePlatformDictDAO.getByName(name);
+    }
+
+    @Override
+    public Map<String, CerePlatformDict> getDictMap(List<String> nameList) {
+        List<CerePlatformDict> list = cerePlatformDictDAO.getByNameList(nameList);
+        return list.stream().collect(Collectors.groupingBy(CerePlatformDict::getDictName, Collectors.collectingAndThen(Collectors.toList(), lst -> lst.get(0))));
+    }
+
+    @Override
+    public List<CerePlatformDict> getSelect(String dictName) {
+        return cerePlatformDictDAO.getSelect(dictName);
+    }
+
+    @Override
+    public Map<Long, String> selectDictNameMap(List<Long> dictIdList) {
+        List<CerePlatformDict> list = cerePlatformDictDAO.selectBatchIds(dictIdList);
+        return list.stream().collect(Collectors.toMap(CerePlatformDict::getDictId, CerePlatformDict::getDictName));
+    }
+}
